@@ -190,7 +190,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(storage.all()[key])
+            del storage.all()[key]
             storage.save()
         except KeyError:
             print("** no instance found **")
@@ -209,13 +209,12 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
-                    print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
-                print_list.append(str(v))
-
+            args = "None"
+        for v in storage.all(
+                    eval(args)).values():
+            print_list.append(
+                        str(v))
         print(print_list)
 
     def help_all(self):
@@ -324,7 +323,7 @@ class HBNBCommand(cmd.Cmd):
         print("Usage: update <className> <id> <attName> <attVal>\n")
 
 
-def parse_params(params:list)->dict:
+def parse_params(params: list) -> dict:
     """Convert an array of params in
     <param>: <key>=<val>
     to a dictionary of keys and values
@@ -346,10 +345,11 @@ def parse_params(params:list)->dict:
 
     # parse values
     for key, val in params:
-        if not val: continue
+        if not val:
+            continue
         try:
             if val[0] == '"':
-                val = val.replace("_"," ").strip('"')
+                val = val.replace("_", " ").strip('"')
             elif "." in val:
                 val = float(val)
             else:
@@ -359,6 +359,7 @@ def parse_params(params:list)->dict:
         parsed[key] = val
 
     return parsed
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
