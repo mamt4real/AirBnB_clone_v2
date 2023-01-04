@@ -45,8 +45,10 @@ class BaseModel:
         cls = type(self).__name__
         data = {}
         data.update(self.__dict__)
+        """
         if '_sa_instance_state' in data:
             del data['_sa_instance_state']
+        """
         return '[{}] ({}) {}'.format(cls, self.id, data)
 
     def save(self):
