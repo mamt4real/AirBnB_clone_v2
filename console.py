@@ -126,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
         params = parse_params(args[1:])
         new_instance = HBNBCommand.classes[args[0]]()
         new_instance.__dict__.update(params)
-        storage.save()
+        new_instance.save()
         print(new_instance.id)
 
     def help_create(self):
