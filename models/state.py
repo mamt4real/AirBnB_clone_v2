@@ -3,7 +3,7 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-from models.city import City
+from os import getenv
 
 
 class State(BaseModel, Base):
@@ -13,13 +13,14 @@ class State(BaseModel, Base):
         String(128), nullable=False
     )
 
-    cities = relationship("City")
-
-    @property
-    def cities(self):
-        """Getter for cities of the state"""
-        from models import storage
-        return list(filter(
-            lambda c: c.state_id == self.id,
-            storage.all(City)
-        ))
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+        cities = relationship("City")
+    else:
+        @property
+        def cities(self):
+            """Getter for cities of the state"""
+            from models import storage
+            return list(filter(
+                lambda c: c.state_id == self.id,
+                storage.all("City").values()
+            ))

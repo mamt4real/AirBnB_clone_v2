@@ -16,9 +16,15 @@ class FileStorage:
         if cls is None:
             return tmp
 
+        name = "some"
+        if isinstance(cls, str):
+            name = cls
+        else:
+            name = cls.__name__
+
         filtered = {
             key: val for key, val in tmp.items() if key.startswith(
-                cls.__name__
+                name
             )
         }
         return filtered

@@ -7,4 +7,5 @@ from sqlalchemy import Column, String
 class Amenity(BaseModel, Base):
     """Amenity Class"""
     __tablename__ = "amenities"
-    name = Column(String(128))
+    name = Column(String(128),
+                  nullable=False)
