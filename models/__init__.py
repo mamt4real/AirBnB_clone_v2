@@ -14,6 +14,9 @@ match storagetype:
         storage = FileStorage()
     case "db":
         storage = DBStorage()
+    case _ :
+        raise ValueError("Storage type is not defined!!")
+
 
 if storage is not None:
     storage.reload()

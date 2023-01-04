@@ -42,8 +42,7 @@ class DBStorage:
         result = {}
         classes = (
             State, City, User, Place,
-            Amenity, Review
-        )
+            Amenity, Review)
         if cls is not None:
             classes = (cls,)
         for cls in classes:
@@ -52,8 +51,26 @@ class DBStorage:
                 key = "{}.{}".format(
                     cls.__name__,
                     doc.id)
-                result[key] = cls(**doc)
+                result[key] = doc
         return result
+
+    def new(self, obj):
+        """Stores a new object in the database"""
+        db = DBStorage.__session
+        db.add(obj)
+
+    def save(self):
+        """persist all changes in the database"""
+        DBStorage.__session.commit()
+
+    def delete(self, obj):
+        """delete an object in the database"""
+        db = DBStorage.__session
+        cls = obj.__class__
+        db.query(cls).where(
+            cls.id == obj.id
+        ).delete()
+        self.save()
 
     def reload(self):
         """Create and set up the session"""
