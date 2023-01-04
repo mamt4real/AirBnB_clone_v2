@@ -20,7 +20,6 @@ sqlhost = os.environ.get("HBNB_MYSQL_HOST")
 sqldb = os.environ.get("HBNB_MYSQL_DB")
 
 
-
 class DBStorage:
     """Database Storage Class"""
     __engine = None

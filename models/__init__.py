@@ -13,7 +13,7 @@ match storagetype:
     case "db":
         from models.engine.db_storage import DBStorage
         storage = DBStorage()
-    case _ :
+    case _:
         raise ValueError("Storage type is not defined!!")
 
 if storage is not None:
