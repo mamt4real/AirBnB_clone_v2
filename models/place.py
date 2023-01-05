@@ -65,9 +65,9 @@ class Place(BaseModel, Base):
     amenity_ids = []
 
     if getenv("HBNB_TYPE_STORAGE") == "db":
-        user = relationship("User")
-        city = relationship("City")
-        reviews = relationship("Review")
+        user = relationship("User", viewonly=True)
+        city = relationship("City", backref="place", viewonly=True)
+        reviews = relationship("Review", viewonly=True)
     else:
         @property
         def reviews(self):

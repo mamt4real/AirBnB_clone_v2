@@ -47,7 +47,7 @@ class BaseModel:
         data.update(self.__dict__)
         if '_sa_instance_state' in data:
             del data['_sa_instance_state']
-        return '[{}] ({}) {}'.format(cls, self.id, data)
+        return "[{}] ({}) {}".format(cls, self.id, data)
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""

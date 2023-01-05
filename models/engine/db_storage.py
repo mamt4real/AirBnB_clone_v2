@@ -3,7 +3,7 @@
 
 import os
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base
 from models.user import User
 from models.place import Place
@@ -75,8 +75,9 @@ class DBStorage:
         """Create and set up the session"""
         Base.metadata.create_all(
             DBStorage.__engine)
-        DBStorage.__session = sessionmaker(
+        maker = sessionmaker(
             bind=DBStorage.__engine,
             autocommit=False,
             expire_on_commit=False,
-            autoflush=False)()
+            autoflush=False)
+        DBStorage.__session = scoped_session(maker)

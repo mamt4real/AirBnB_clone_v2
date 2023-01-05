@@ -23,8 +23,14 @@ class User(BaseModel, Base):
     )
 
     if getenv("HBNB_TYPE_STORAGE") == "db":
-        places = relationship("Place")
-        reviews = relationship("Review")
+        places = relationship(
+            "Place",
+            cascade="delete, delete-orphan"
+        )
+        reviews = relationship(
+            "Review",
+            cascade="delete"
+        )
     else:
         @property
         def places(self):
